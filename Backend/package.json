@@ -1,0 +1,16 @@
+{
+  "name": "react-todo",
+  "version": "1.0.0",
+  "description": "todo app with react,tailwind,axios,node.js,express.js,mongoose",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ForCoding",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "mongoose": "^8.4.0"
+  }
+}
