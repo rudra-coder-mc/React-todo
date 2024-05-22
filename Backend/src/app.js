@@ -1,8 +1,6 @@
-import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
 
-import session from "express-session";
 import { createServer } from "http";
 
 const app = express();
@@ -23,16 +21,6 @@ app.use(
 app.use(express.json({ limit: "16kb" }));
 app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(express.static("public")); // configure static file to save images locally
-app.use(cookieParser());
-
-// required for passport
-app.use(
-  session({
-    secret: process.env.EXPRESS_SESSION_SECRET,
-    resave: true,
-    saveUninitialized: true,
-  })
-); // session secret
 
 // api routes
 import { errorHandler } from "./middlewares/error.middlewares.js";

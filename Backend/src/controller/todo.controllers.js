@@ -1,7 +1,7 @@
-import { Todo } from "../../../models/apps/todo/todo.models.js";
-import { ApiError } from "../../../utils/ApiError.js";
-import { ApiResponse } from "../../../utils/ApiResponse.js";
-import { asyncHandler } from "../../../utils/asyncHandler.js";
+import { Todo } from "../models/todo.models.js";
+import { ApiError } from "../utils/ApiError.js";
+import { ApiResponse } from "../utils/ApiResponse.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
 
 const getAllTodos = asyncHandler(async (req, res) => {
   const { query, complete } = req.query;
