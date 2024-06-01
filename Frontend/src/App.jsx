@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import axios from "axios";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
@@ -65,9 +65,6 @@ function App() {
     }
   };
 
-  // const { isLoading, error, data } = useQuery("todos", () =>
-
-  // );
   const { isLoading, error, data } = useQuery({
     queryKey: ["todos"],
     queryFn: () =>
@@ -133,6 +130,7 @@ function App() {
                         onChange={() =>
                           toggleTodoStatusMutation.mutate(todo._id)
                         }
+                        disabled={toggleTodoStatusMutation.isPending}
                       />
                     </label>
                   </td>
@@ -142,6 +140,7 @@ function App() {
                     <button
                       className="btn bg-red-600 text-white"
                       onClick={() => deleteTodoMutation.mutate(todo._id)}
+                      disabled={deleteTodoMutation.isPending}
                     >
                       Delete
                     </button>
