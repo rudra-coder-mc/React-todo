@@ -8,6 +8,7 @@ import {
   useUpdateTodoMutation,
 } from "./Store/Server/mutation";
 import Input from "./Components/Input";
+import Options from "./Components/Option";
 
 function App() {
   const [todo, setTodo] = useState({ title: "", description: "" });
@@ -43,11 +44,11 @@ function App() {
   };
 
   const { isLoading, error, data } = useGetTodo();
-  // console.log(data);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>An error has occurred: {error.message}</div>;
 
+  console.log(data.data.length);
   return (
     <>
       <div className="flex flex-col justify-start items-center w-full h-dvh bg-black text-white">
@@ -78,10 +79,13 @@ function App() {
             <Input type="submit" value={updateID ? "Update" : "Submit"} />
           </form>
         </div>
+        <Options title="all" count={data.data.length} /> 
+        <Options title="Pading" count={data.data.length} /> 
+        <Options title="Complite" count={data.data.length} /> 
         <div className="flex justify-center overflow-auto ">
           <table className="table w-1/2 bg-gray-800">
             <tbody>
-              {data.map((todo) => (
+              {data.data.map((todo) => (
                 <tr key={todo._id}>
                   <td>
                     <label>
