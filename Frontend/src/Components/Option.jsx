@@ -1,7 +1,6 @@
 import { classNames } from "../Util/";
 
-const Options = (prop) => {
-  const { title, count, isActive = true, onClick } = prop;
+const Options = ({ title, count, isActive = true, onClick }) => {
   return (
     <div
       onClick={onClick}
