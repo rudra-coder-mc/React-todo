@@ -7,43 +7,41 @@ import {
   useToggleTodoStatusMutation,
   useUpdateTodoMutation,
 } from "./Store/Server/mutation";
-import Button from "./Components/Button";
+import Input from "./Components/Input";
 import Options from "./Components/Option";
-import CreateTodoModal from "./Components/CreateTodoModal";
 
 function App() {
-  // const [todo, setTodo] = useState({ title: "", description: "" });
-  // const [updateID, setUpdateID] = useState("");
-  const [createTodoModal, setCreateTodoModal] = useState(false);
+  const [todo, setTodo] = useState({ title: "", description: "" });
+  const [updateID, setUpdateID] = useState("");
   const queryClient = useQueryClient();
-  // const addTodo = useAddTodoMutation();
+  const addTodo = useAddTodoMutation();
   const deleteTodo = useDeleteTodoMutation();
   const toggleTodoStatus = useToggleTodoStatusMutation();
-  // const UpdateTodo = useUpdateTodoMutation();
+  const UpdateTodo = useUpdateTodoMutation();
 
-  // const handleAddOrUpdateTodo = (e) => {
-  //   e.preventDefault();
+  const handleAddOrUpdateTodo = (e) => {
+    e.preventDefault();
 
-  //   if (updateID) {
-  //     UpdateTodo.mutate(
-  //       { todo, updateID },
-  //       {
-  //         onSuccess: () => {
-  //           queryClient.invalidateQueries("todos");
-  //           setTodo({ title: "", description: "" });
-  //           setUpdateID("");
-  //         },
-  //       }
-  //     );
-  //   } else {
-  //     addTodo.mutate(todo, {
-  //       onSuccess: () => {
-  //         queryClient.invalidateQueries("todos");
-  //         setTodo({ title: "", description: "" });
-  //       },
-  //     });
-  //   }
-  // };
+    if (updateID) {
+      UpdateTodo.mutate(
+        { todo, updateID },
+        {
+          onSuccess: () => {
+            queryClient.invalidateQueries("todos");
+            setTodo({ title: "", description: "" });
+            setUpdateID("");
+          },
+        }
+      );
+    } else {
+      addTodo.mutate(todo, {
+        onSuccess: () => {
+          queryClient.invalidateQueries("todos");
+          setTodo({ title: "", description: "" });
+        },
+      });
+    }
+  };
 
   const [state, setState] = useState(null);
 
@@ -56,25 +54,7 @@ function App() {
   return (
     <>
       <div className="flex flex-col justify-start items-center w-full h-dvh bg-black text-white">
-        <div className=" w-full px-3 mt-10">
-          <Button
-            onClick={() => {
-              setCreateTodoModal(true);
-            }}
-            severity="primary"
-            className="mx-auto w-full max-w-[500px]"
-          >
-            Create a new task
-          </Button>
-        </div>
-        {createTodoModal && (
-          <CreateTodoModal
-            onClose={() => {
-              setCreateTodoModal(false);
-            }}
-          />
-        )}
-        {/* <div className="artboard artboard-horizontal phone-3 flex flex-col justify-center items-center m-5 bg-gray-800 border">
+        <div className="artboard artboard-horizontal phone-3 flex flex-col justify-center items-center m-5 bg-gray-800 border">
           <form
             className="flex flex-col gap-8 p-4 w-full   "
             onSubmit={handleAddOrUpdateTodo}
@@ -100,8 +80,7 @@ function App() {
 
             <Input type="submit" value={updateID ? "Update" : "Submit"} />
           </form>
-        </div> */}
-
+        </div>
         <div className="w-full flex justify-around max-w-[600px] gap-4 my-6">
           <Options
             title="all"
@@ -158,7 +137,16 @@ function App() {
                         >
                           Delete
                         </button>
-                        <button className="btn bg-green-600 text-white">
+                        <button
+                          className="btn bg-green-600 text-white"
+                          onClick={() => {
+                            setTodo({
+                              title: todo.title,
+                              description: todo.description,
+                            });
+                            setUpdateID(todo._id);
+                          }}
+                        >
                           Update
                         </button>
                       </td>
@@ -200,7 +188,16 @@ function App() {
                       >
                         Delete
                       </button>
-                      <button className="btn bg-green-600 text-white">
+                      <button
+                        className="btn bg-green-600 text-white"
+                        onClick={() => {
+                          setTodo({
+                            title: todo.title,
+                            description: todo.description,
+                          });
+                          setUpdateID(todo._id);
+                        }}
+                      >
                         Update
                       </button>
                     </td>
