@@ -43,7 +43,7 @@ function App() {
     }
   };
 
-  const [state, setState] = useState(null);
+  // const [state, setState] = useState(null);
 
   const { isLoading, error, data } = useGetTodo();
 
@@ -81,7 +81,8 @@ function App() {
             <Input type="submit" value={updateID ? "Update" : "Submit"} />
           </form>
         </div>
-        <div className="w-full flex justify-around max-w-[600px] gap-4 my-6">
+
+        {/* <div className="w-full flex justify-around max-w-[600px] gap-4 my-6">
           <Options
             title="all"
             count={data.length}
@@ -94,115 +95,61 @@ function App() {
             }}
           />
           <Options title="Complite" onClick={() => setState(true)} />
-        </div>
+        </div> */}
 
         <div className="flex justify-center overflow-auto ">
           <table className="table w-1/2 bg-gray-800">
             <tbody>
-              {state != null &&
-                data
-                  .filter((todo) => todo.isComplete == state)
-                  .map((todo) => (
-                    <tr key={todo._id}>
-                      <td>
-                        <label>
-                          <input
-                            type="checkbox"
-                            className="checkbox"
-                            checked={todo.isComplete}
-                            onChange={() =>
-                              toggleTodoStatus.mutate(todo._id, {
-                                onSuccess: () => {
-                                  queryClient.invalidateQueries("todos");
-                                },
-                              })
-                            }
-                            disabled={toggleTodoStatus.isPending}
-                          />
-                        </label>
-                      </td>
-                      <td>{todo.title}</td>
-                      <td>{todo.description}</td>
-                      <td>
-                        <button
-                          className="btn bg-red-600 text-white"
-                          onClick={() =>
-                            deleteTodo.mutate(todo._id, {
-                              onSuccess: () => {
-                                queryClient.invalidateQueries("todos");
-                              },
-                            })
-                          }
-                          disabled={deleteTodo.isPending}
-                        >
-                          Delete
-                        </button>
-                        <button
-                          className="btn bg-green-600 text-white"
-                          onClick={() => {
-                            setTodo({
-                              title: todo.title,
-                              description: todo.description,
-                            });
-                            setUpdateID(todo._id);
-                          }}
-                        >
-                          Update
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-              {state == null &&
-                data.map((todo) => (
-                  <tr key={todo._id}>
-                    <td>
-                      <label>
-                        <input
-                          type="checkbox"
-                          className="checkbox"
-                          checked={todo.isComplete}
-                          onChange={() =>
-                            toggleTodoStatus.mutate(todo._id, {
-                              onSuccess: () => {
-                                queryClient.invalidateQueries("todos");
-                              },
-                            })
-                          }
-                          disabled={toggleTodoStatus.isPending}
-                        />
-                      </label>
-                    </td>
-                    <td>{todo.title}</td>
-                    <td>{todo.description}</td>
-                    <td>
-                      <button
-                        className="btn bg-red-600 text-white"
-                        onClick={() =>
-                          deleteTodo.mutate(todo._id, {
+              {data.map((todo) => (
+                <tr key={todo._id}>
+                  <td>
+                    <label>
+                      <input
+                        type="checkbox"
+                        className="checkbox bg-white"
+                        checked={todo.isComplete}
+                        onChange={() =>
+                          toggleTodoStatus.mutate(todo._id, {
                             onSuccess: () => {
                               queryClient.invalidateQueries("todos");
                             },
                           })
                         }
-                        disabled={deleteTodo.isPending}
-                      >
-                        Delete
-                      </button>
-                      <button
-                        className="btn bg-green-600 text-white"
-                        onClick={() => {
-                          setTodo({
-                            title: todo.title,
-                            description: todo.description,
-                          });
-                          setUpdateID(todo._id);
-                        }}
-                      >
-                        Update
-                      </button>
-                    </td>
-                  </tr>
-                ))}
+                        disabled={toggleTodoStatus.isPending}
+                      />
+                    </label>
+                  </td>
+                  <td>{todo.title}</td>
+                  <td>{todo.description}</td>
+                  <td className="flex gap-2">
+                    <button
+                      className="btn bg-red-600 text-white"
+                      onClick={() =>
+                        deleteTodo.mutate(todo._id, {
+                          onSuccess: () => {
+                            queryClient.invalidateQueries("todos");
+                          },
+                        })
+                      }
+                      disabled={deleteTodo.isPending}
+                    >
+                      Delete
+                    </button>
+                    <button
+                      className="btn bg-green-600 text-white"
+                      onClick={() => {
+                        setTodo({
+                          title: todo.title,
+                          description: todo.description,
+                        });
+                        setUpdateID(todo._id);
+                      }}
+                    >
+                      Update
+                    </button>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
