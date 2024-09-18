@@ -10,14 +10,11 @@ const httpServer = createServer(app);
 // global middlewares
 app.use(
   cors({
-    origin:
-      process.env.CORS_ORIGIN === "*"
-        ? "*" // This might give CORS error for some origins due to credentials set to true
-        : process.env.CORS_ORIGIN?.split(","), // For multiple cors origin for production. Refer https://github.com/hiteshchoudhary/apihub/blob/a846abd7a0795054f48c7eb3e71f3af36478fa96/.env.sample#L12C1-L12C12
+    origin: "http://localhost:5173", // allow your frontend's origin
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"], // include PATCH in allowed methods
     credentials: true,
-  })
+  }),
 );
-
 app.use(express.json({ limit: "16kb" }));
 app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(express.static("public")); // configure static file to save images locally
